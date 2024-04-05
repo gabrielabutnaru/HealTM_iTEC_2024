@@ -7,6 +7,10 @@ import Categories from './screens/app/Categories';
 import Home from './screens/app/Home';
 import Profil from './screens/app/Profil';
 import { Ionicons } from '@expo/vector-icons';
+import { useFonts } from 'expo-font';
+import * as SplashScreen from 'expo-splash-screen';
+import { useCallback } from 'react';
+import { View } from 'react-native';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -17,27 +21,27 @@ const TabNav = () => {
         headerShown: false,
         tabBarStyle: {
           height: '10%',
-          backgroundColor: '#F1F5A8',
-          borderRadius: 10,
-          shadowOffset: 0.2,
+          backgroundColor: 'white',
+          borderRadius: 32,
+          shadowOffset: 0.4,
         },
         headerStyle: {
           backgroundColor: '#45D33D',
         },
       }}>
       <Tab.Screen
-        name={'Home'}
+        name={'Specialități'}
         component={Home}
         options={{
           tabBarIcon: ({ focused }) => (
             <Ionicons
-              name={'home'}
-              size={focused ? 32 : 26}
-              color={focused ? '#A5DD9B' : 'gray'}
+              name={'reader-outline'}
+              size={focused ? 34 : 28}
+              color={focused ? '#F64048' : 'gray'}
             />
           ),
-          tabBarInactiveTintColor: '#F1F5A8',
-          tabBarActiveTintColor: '#F1F5A8',
+          tabBarInactiveTintColor: 'gray',
+          tabBarActiveTintColor: '#F64048',
           headerShown: false,
         }}
       />
@@ -47,13 +51,13 @@ const TabNav = () => {
         options={{
           tabBarIcon: ({ focused }) => (
             <Ionicons
-              name={'user'}
-              size={focused ? 32 : 26}
-              color={focused ? '#A5DD9B' : 'gray'}
+              name={'person'}
+              size={focused ? 34 : 28}
+              color={focused ? '#F64048' : 'gray'}
             />
           ),
-          tabBarInactiveTintColor: '#F1F5A8',
-          tabBarActiveTintColor: '#F1F5A8',
+          tabBarInactiveTintColor: 'gray',
+          tabBarActiveTintColor: '#F64048',
         }}
       />
     </Tab.Navigator>
@@ -63,17 +67,40 @@ const TabNav = () => {
 const StackNav = () => {
   return (
     <Stack.Navigator>
+      <Stack.Screen
+        name={'TabNav'}
+        component={TabNav}
+        options={{ headerShown: false }}
+      />
       <Stack.Screen name={'Register'} component={Register} />
       <Stack.Screen name={'Login'} component={Login} />
-      <Stack.Screen name={'TabNav'} component={TabNav} />
       <Stack.Screen name={'Categories'} component={Categories} />
     </Stack.Navigator>
   );
 };
+
+SplashScreen.preventAutoHideAsync();
+
 export default function App() {
+  const [fontsLoaded, fontError] = useFonts({
+    'Lexend-Black': require('./assets/fonts/Lexend-Black.ttf'),
+    'Lexend-SemiBold': require('./assets/fonts/Lexend-SemiBold.ttf'),
+    'Lexend-Bold': require('./assets/fonts/Lexend-Bold.ttf'),
+  });
+  const onLayoutRootView = useCallback(async () => {
+    if (fontsLoaded || fontError) {
+      await SplashScreen.hideAsync();
+    }
+  }, [fontsLoaded, fontError]);
+
+  if (!fontsLoaded && !fontError) {
+    return null;
+  }
   return (
-    <NavigationContainer>
-      <StackNav />
-    </NavigationContainer>
+    <View style={{ flex: 1 }} onLayout={onLayoutRootView}>
+      <NavigationContainer>
+        <StackNav />
+      </NavigationContainer>
+    </View>
   );
 }
