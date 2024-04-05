@@ -61,12 +61,14 @@ const TabNav = () => {
 };
 
 const StackNav = () => {
-  <Stack.Navigator>
-    <Stack.Screen name={'Register'} component={Register} />
-    <Stack.Screen name={'Login'} component={Login} />
-    <Stack.Screen name={'TabNav'} component={TabNav} />
-    <Stack.Screen name={'Categories'} component={Categories} />
-  </Stack.Navigator>;
+  return (
+    <Stack.Navigator>
+      <Stack.Screen name={'Register'} component={Register} />
+      <Stack.Screen name={'Login'} component={Login} />
+      <Stack.Screen name={'TabNav'} component={TabNav} />
+      <Stack.Screen name={'Categories'} component={Categories} />
+    </Stack.Navigator>
+  );
 };
 export default function App() {
   return (
