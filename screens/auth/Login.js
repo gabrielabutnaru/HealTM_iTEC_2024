@@ -25,30 +25,54 @@ function Login() {
 
   return (
     <View style={loginStyles.container}>
-      <TextInput
-        onChangeText={setEmail}
-        value={email}
-        placeholder="Enter your email..."
-      />
-      <TextInput
-        onChangeText={setPassword}
-        value={password}
-        placeholder="Enter your password..."
-        secureTextEntry={true}
-      />
-      <TouchableOpacity
-        style={loginStyles.loginButton}
-        onPress={() => {
-          onPressSubmit({ email: email, password: password });
-        }}>
-        <Text style={loginStyles.loginText}>LOGIN</Text>
-      </TouchableOpacity>
+      <View style={loginStyles.containerTitle}>
+        <Text>buna</Text>
+      </View>
+      <View style={loginStyles.containerTextInput}>
+        <TextInput
+          onChangeText={setEmail}
+          value={email}
+          placeholder="Enter your email..."
+        />
+        <TextInput
+          onChangeText={setPassword}
+          value={password}
+          placeholder="Enter your password..."
+          secureTextEntry={true}
+        />
+      </View>
+      <View style={loginStyles.containerButton}>
+        <TouchableOpacity
+          style={loginStyles.loginButton}
+          onPress={() => {
+            onPressSubmit({ email: email, password: password });
+          }}>
+          <Text style={loginStyles.loginText}>LOGIN</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 }
 
 const loginStyles = StyleSheet.create({
   container: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#FFF0F0',
+  },
+  containerTitle: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: 'red',
+  },
+  containerTextInput: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  containerButton: {
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
