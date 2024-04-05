@@ -7,6 +7,9 @@ import Categories from './screens/app/Categories';
 import Home from './screens/app/Home';
 import Profil from './screens/app/Profil';
 import { Ionicons } from '@expo/vector-icons';
+import { useEffect, useState } from 'react';
+import { onAuthStateChanged } from '@firebase/auth';
+import { auth } from './firebase/config';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -26,6 +29,21 @@ const TabNav = () => {
         },
       }}>
       <Tab.Screen
+        name={'Profil'}
+        component={Profil}
+        options={{
+          tabBarIcon: ({ focused }) => (
+            <Ionicons
+              name={'user'}
+              size={focused ? 32 : 26}
+              color={focused ? '#A5DD9B' : 'gray'}
+            />
+          ),
+          tabBarInactiveTintColor: '#F1F5A8',
+          tabBarActiveTintColor: '#F1F5A8',
+        }}
+      />
+      <Tab.Screen
         name={'Home'}
         component={Home}
         options={{
@@ -41,21 +59,21 @@ const TabNav = () => {
           headerShown: false,
         }}
       />
-      <Tab.Screen
-        name={'Profil'}
-        component={Profil}
-        options={{
-          tabBarIcon: ({ focused }) => (
-            <Ionicons
-              name={'user'}
-              size={focused ? 32 : 26}
-              color={focused ? '#A5DD9B' : 'gray'}
-            />
-          ),
-          tabBarInactiveTintColor: '#F1F5A8',
-          tabBarActiveTintColor: '#F1F5A8',
-        }}
-      />
+      {/*<Tab.Screen*/}
+      {/*  name={'Profil'}*/}
+      {/*  component={Profil}*/}
+      {/*  options={{*/}
+      {/*    tabBarIcon: ({ focused }) => (*/}
+      {/*      <Ionicons*/}
+      {/*        name={'user'}*/}
+      {/*        size={focused ? 32 : 26}*/}
+      {/*        color={focused ? '#A5DD9B' : 'gray'}*/}
+      {/*      />*/}
+      {/*    ),*/}
+      {/*    tabBarInactiveTintColor: '#F1F5A8',*/}
+      {/*    tabBarActiveTintColor: '#F1F5A8',*/}
+      {/*  }}*/}
+      {/*/>*/}
     </Tab.Navigator>
   );
 };
@@ -63,17 +81,37 @@ const TabNav = () => {
 const StackNav = () => {
   return (
     <Stack.Navigator>
-      <Stack.Screen name={'Register'} component={Register} />
-      <Stack.Screen name={'Login'} component={Login} />
       <Stack.Screen name={'TabNav'} component={TabNav} />
       <Stack.Screen name={'Categories'} component={Categories} />
     </Stack.Navigator>
   );
 };
+
+const AuthStack = () => {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen name={'Login'} component={Login} />
+      <Stack.Screen name={'Register'} component={Register} />
+    </Stack.Navigator>
+  );
+};
 export default function App() {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    onAuthStateChanged(auth, user => {
+      if (user) {
+        setIsLoggedIn(true);
+      } else {
+        setIsLoggedIn(false);
+        console.log(auth);
+      }
+    });
+  }, []);
+
   return (
     <NavigationContainer>
-      <StackNav />
+      {isLoggedIn ? StackNav() : AuthStack()}
     </NavigationContainer>
   );
 }
