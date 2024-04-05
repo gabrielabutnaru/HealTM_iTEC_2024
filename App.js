@@ -11,6 +11,9 @@ import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
 import { useCallback } from 'react';
 import { View } from 'react-native';
+import { useEffect, useState } from 'react';
+import { onAuthStateChanged } from '@firebase/auth';
+import { auth } from './firebase/config';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -42,12 +45,11 @@ const TabNav = () => {
           ),
           tabBarInactiveTintColor: 'gray',
           tabBarActiveTintColor: '#F64048',
-          headerShown: false,
         }}
       />
       <Tab.Screen
-        name={'Profil'}
-        component={Profil}
+        name={'Home'}
+        component={Home}
         options={{
           tabBarIcon: ({ focused }) => (
             <Ionicons
@@ -58,6 +60,22 @@ const TabNav = () => {
           ),
           tabBarInactiveTintColor: 'gray',
           tabBarActiveTintColor: '#F64048',
+          headerShown: false,
+        }}
+      />
+      <Tab.Screen
+        name={'Profil'}
+        component={Profil}
+        options={{
+          tabBarIcon: ({ focused }) => (
+            <Ionicons
+              name={'user'}
+              size={focused ? 32 : 26}
+              color={focused ? '#A5DD9B' : 'gray'}
+            />
+          ),
+          tabBarInactiveTintColor: '#F1F5A8',
+          tabBarActiveTintColor: '#F1F5A8',
         }}
       />
     </Tab.Navigator>
@@ -67,14 +85,17 @@ const TabNav = () => {
 const StackNav = () => {
   return (
     <Stack.Navigator>
-      <Stack.Screen
-        name={'TabNav'}
-        component={TabNav}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen name={'Register'} component={Register} />
-      <Stack.Screen name={'Login'} component={Login} />
+      <Stack.Screen name={'TabNav'} component={TabNav} />
       <Stack.Screen name={'Categories'} component={Categories} />
+    </Stack.Navigator>
+  );
+};
+
+const AuthStack = () => {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen name={'Login'} component={Login} />
+      <Stack.Screen name={'Register'} component={Register} />
     </Stack.Navigator>
   );
 };
@@ -82,6 +103,18 @@ const StackNav = () => {
 SplashScreen.preventAutoHideAsync();
 
 export default function App() {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    onAuthStateChanged(auth, user => {
+      if (user) {
+        setIsLoggedIn(true);
+      } else {
+        setIsLoggedIn(false);
+        console.log(auth);
+      }
+    });
+  }, []);
   const [fontsLoaded, fontError] = useFonts({
     'Lexend-Black': require('./assets/fonts/Lexend-Black.ttf'),
     'Lexend-SemiBold': require('./assets/fonts/Lexend-SemiBold.ttf'),
@@ -96,10 +129,11 @@ export default function App() {
   if (!fontsLoaded && !fontError) {
     return null;
   }
+
   return (
     <View style={{ flex: 1 }} onLayout={onLayoutRootView}>
       <NavigationContainer>
-        <StackNav />
+        {isLoggedIn ? StackNav() : AuthStack()}
       </NavigationContainer>
     </View>
   );
