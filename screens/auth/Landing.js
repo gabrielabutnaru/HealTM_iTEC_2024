@@ -2,8 +2,11 @@ import { View, ImageBackground, Image, Text } from 'react-native';
 import KSpacer from '../../components/KSpacer';
 import KButton from '../../components/KButton';
 import { useNavigation } from '@react-navigation/native';
+import { useContext } from 'react';
+import { MyContext } from '../../contexts/myContext';
 
 function Landing() {
+  const { setIsMedic } = useContext(MyContext);
   const navigator = useNavigation();
   return (
     <View
@@ -36,7 +39,10 @@ function Landing() {
           <KButton
             text={'Medic'}
             width={260}
-            onPress={() => navigator.navigate('LoginD')}
+            onPress={() => {
+              setIsMedic(true);
+              navigator.navigate('Login');
+            }}
           />
           <KSpacer h={10} />
           <KButton
