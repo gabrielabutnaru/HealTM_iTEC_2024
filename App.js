@@ -16,6 +16,7 @@ import { onAuthStateChanged } from '@firebase/auth';
 import { auth } from './firebase/config';
 import TestScreen from './screens/TextScreen';
 
+import Programare from './screens/app/Programare';
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
 const TabNav = () => {
@@ -91,6 +92,11 @@ const StackNav = () => {
         options={{ headerShown: false }}
       />
       <Stack.Screen name={'Categories'} component={Categories} />
+      <Stack.Screen
+        name={'Programare'}
+        component={Programare}
+        options={{ headerShown: false }}
+      />
     </Stack.Navigator>
   );
 };
@@ -124,6 +130,7 @@ export default function App() {
   }, []);
   const [fontsLoaded, fontError] = useFonts({
     'Lexend-Black': require('./assets/fonts/Lexend-Black.ttf'),
+    'Lexend-Medium': require('./assets/fonts/Lexend-Medium.ttf'),
     'Lexend-SemiBold': require('./assets/fonts/Lexend-SemiBold.ttf'),
     'Lexend-Bold': require('./assets/fonts/Lexend-Bold.ttf'),
   });
