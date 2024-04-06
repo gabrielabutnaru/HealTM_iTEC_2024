@@ -13,6 +13,7 @@ import { Ionicons } from '@expo/vector-icons';
 
 function Login({ navigation }) {
   const backgroundImage = require('../../assets/images/ImgBk.png');
+  const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -59,8 +60,8 @@ function Login({ navigation }) {
               color={'#F64048'}
             />
             <TextInput
-              onChangeText={setEmail}
-              value={email}
+              onChangeText={setName}
+              value={name}
               placeholder="Enter your name..."
               placeholderTextColor={'#ACACAC'}
               style={loginStyles.textInput}
