@@ -20,7 +20,8 @@ import { DateProvider } from './contexts/DateProvider';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 import Landing from './screens/auth/Landing';
-import LoginD from './screens/authDoctor/LoginD';
+import { MyContext } from './contexts/myContext';
+import CreateDocProfile from './screens/app/CreateDocProfile';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -103,8 +104,11 @@ const AuthStack = () => {
         component={Landing}
         options={{ headerShown: false }}
       />
-      <Stack.Screen name={'LoginD'} component={LoginD} />
-      {/*  <Stack.Screen name={'RegisterD'} component={RegisterD} />*/}
+      <Stack.Screen
+        name={'CreateDocProfile'}
+        component={CreateDocProfile}
+        options={{ headerShown: false }}
+      />
       <Stack.Screen name={'Login'} component={Login} />
       <Stack.Screen name={'Register'} component={Register} />
     </Stack.Navigator>
@@ -117,6 +121,7 @@ export default function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [time, setTime] = useState('9:00');
   const [date, setDate] = useState('');
+  const [isMedic, setIsMedic] = useState(false);
 
   useEffect(() => {
     onAuthStateChanged(auth, user => {
@@ -148,13 +153,15 @@ export default function App() {
     <GestureHandlerRootView style={{ flex: 1 }}>
       <BottomSheetModalProvider>
         <View style={{ flex: 1 }} onLayout={onLayoutRootView}>
-          <TimeProvider.Provider value={{ time, setTime }}>
-            <DateProvider.Provider value={{ date, setDate }}>
-              <NavigationContainer>
-                {isLoggedIn ? StackNav() : AuthStack()}
-              </NavigationContainer>
-            </DateProvider.Provider>
-          </TimeProvider.Provider>
+          <MyContext.Provider value={{ isMedic, setIsMedic }}>
+            <TimeProvider.Provider value={{ time, setTime }}>
+              <DateProvider.Provider value={{ date, setDate }}>
+                <NavigationContainer>
+                  {isLoggedIn ? StackNav() : AuthStack()}
+                </NavigationContainer>
+              </DateProvider.Provider>
+            </TimeProvider.Provider>
+          </MyContext.Provider>
         </View>
       </BottomSheetModalProvider>
     </GestureHandlerRootView>
