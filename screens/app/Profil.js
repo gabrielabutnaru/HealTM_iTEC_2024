@@ -1,11 +1,22 @@
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { auth } from '../../firebase/config';
 import { signOut } from '@firebase/auth';
+import KAppointment from '../../components/KAppointment';
+import KSpacer from '../../components/KSpacer';
 
 const Profil = () => {
   return (
     <View style={profilStyles.container}>
       <Text>Profil</Text>
+      <KSpacer h={20} />
+      <KAppointment
+        specializare={'Cardiologie'}
+        clinica={'Medicis'}
+        ora={'10:00'}
+        zi={'11.04.2024'}
+        medic={'Ana Maria'}
+        onPress={() => alert('Delete appointment.')}
+      />
       <TouchableOpacity
         style={profilStyles.loginButton}
         onPress={() => {
