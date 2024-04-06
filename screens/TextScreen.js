@@ -1,17 +1,23 @@
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
-import { auth } from '../../firebase/config';
-import { signOut } from '@firebase/auth';
+import { fetchDataAddProfile } from '../firebase/fetchDataDoctor/fetchDataProfile';
+import { doctorDataList } from '../firebase/doctorData';
 
-const Profil = () => {
+const TestScreen = () => {
   return (
     <View style={profilStyles.container}>
-      <Text>Profil</Text>
       <TouchableOpacity
         style={profilStyles.loginButton}
         onPress={() => {
-          signOut(auth).then();
+          doctorDataList.forEach(elem => {
+            fetchDataAddProfile(
+              elem.id,
+              elem.name,
+              elem.clinicName,
+              elem.speciality
+            );
+          });
         }}>
-        <Text style={profilStyles.loginText}>LogOut</Text>
+        <Text style={profilStyles.loginText}>DELETE</Text>
       </TouchableOpacity>
     </View>
   );
@@ -36,4 +42,4 @@ const profilStyles = StyleSheet.create({
     fontSize: 16,
   },
 });
-export default Profil;
+export default TestScreen;
