@@ -1,7 +1,7 @@
 import { View, Text, TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
-const KAppointment = ({ specializare, medic, clinica, zi, ora, onPress }) => {
+const KAppointment = ({ specializare, medic, clinica, zi, ora, onX }) => {
   return (
     <View
       style={{
@@ -54,7 +54,7 @@ const KAppointment = ({ specializare, medic, clinica, zi, ora, onPress }) => {
           </View>
         </View>
         <View style={{ alignItems: 'flex-end' }}>
-          <TouchableOpacity onPress={() => onPress()}>
+          <TouchableOpacity onPress={onX}>
             <Ionicons
               name={'close-outline'}
               color="#F64048"
