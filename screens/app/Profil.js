@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, ImageBackground } from 'react-native';
 import { auth } from '../../firebase/config';
 import { signOut } from '@firebase/auth';
 import KAppointment from '../../components/KAppointment';
@@ -25,71 +25,114 @@ const Profil = () => {
 
   return (
     <View style={profilStyles.container}>
-      <Text>Profil</Text>
-      <KSpacer h={20} />
-      <KAppointment
-        specializare={'Cardiologie'}
-        clinica={'Medicis'}
-        ora={'10:00'}
-        zi={'11.04.2024'}
-        medic={'Ana Maria'}
-        onX={() => handlePresentModalPress()}
-      />
-      <TouchableOpacity
-        style={profilStyles.loginButton}
-        onPress={() => {
-          signOut(auth).then();
-        }}>
-        <Text style={profilStyles.loginText}>LogOut</Text>
-      </TouchableOpacity>
-      <BottomSheetModal
-        ref={bottomSheetModalRef}
-        index={0}
-        snapPoints={snapPoints}
-        onDismiss={closeModalPress}
-        handleIndicatorStyle={{ backgroundColor: '#F64048' }}>
+      <ImageBackground
+        source={require('../../assets/images/ImgBk.png')}
+        style={{ alignItems: 'center' }}>
         <View
           style={{
-            flex: 1,
-            justifyContent: 'center',
-            alignItems: 'center',
-            paddingHorizontal: 36,
+            paddingVertical: 42,
+            paddingHorizontal: 24,
+            width: '100%',
+            justifyContent: 'space-between',
+            height: '100%',
           }}>
-          <Text
-            style={{
-              fontSize: 24,
-              fontFamily: 'Lexend-SemiBold',
-              color: '#F64048',
-              textAlign: 'center',
-            }}>
-            Cancel your appointment?
-          </Text>
-          <KSpacer h={40} />
-          <View style={{ flexDirection: 'row' }}>
-            <KButton
-              width={100}
-              label={'Yes'}
-              onPress={() => alert('Insert delete here')}
+          <View>
+            <Text
+              style={{
+                color: '#F64048',
+                fontFamily: 'Lexend-Bold',
+                fontSize: 48,
+              }}>
+              Profil
+            </Text>
+            <KSpacer h={36} />
+            <Text
+              style={{
+                color: '#F64048',
+                fontFamily: 'Lexend-SemiBold',
+                fontSize: 24,
+              }}>
+              Nume
+            </Text>
+
+            <KSpacer h={20} />
+            <Text
+              style={{
+                color: '#2A2A2A',
+                fontFamily: 'Lexend-SemiBold',
+                fontSize: 20,
+              }}>
+              Programări
+            </Text>
+            <KSpacer h={8} />
+            <KAppointment
+              specializare={'Cardiologie'}
+              clinica={'Medicis'}
+              ora={'10:00'}
+              zi={'11.04.2024'}
+              medic={'Ana Maria'}
+              onX={() => handlePresentModalPress()}
             />
-            <KSpacer w={20} />
+          </View>
+          <View>
             <KButton
-              width={100}
-              label={'No'}
-              outline={true}
-              onPress={() => closeModalPress()}
+              width={'100%'}
+              label={'Log Out'}
+              onPress={() => {
+                signOut(auth).then();
+              }}
             />
           </View>
         </View>
-      </BottomSheetModal>
-      {state === true && (
-        <View
-          style={{
-            position: 'absolute',
-            height: '100%',
-            width: '100%',
-            backgroundColor: 'rgba(0,0,0,0.3)',
-          }}></View>
-      )}
+        <BottomSheetModal
+          ref={bottomSheetModalRef}
+          index={0}
+          snapPoints={snapPoints}
+          onDismiss={closeModalPress}
+          handleIndicatorStyle={{ backgroundColor: '#F64048' }}>
+          <View
+            style={{
+              flex: 1,
+              justifyContent: 'center',
+              alignItems: 'center',
+              paddingHorizontal: 36,
+            }}>
+            <Text
+              style={{
+                fontSize: 24,
+                fontFamily: 'Lexend-SemiBold',
+                color: '#F64048',
+                textAlign: 'center',
+              }}>
+              Cancel your appointment?
+            </Text>
+            <KSpacer h={40} />
+            <View style={{ flexDirection: 'row' }}>
+              <KButton
+                width={100}
+                label={'Yes'}
+                onPress={() => alert('Insert delete here')}
+              />
+              <KSpacer w={20} />
+              <KButton
+                width={100}
+                label={'No'}
+                outline={true}
+                onPress={() => closeModalPress()}
+              />
+            </View>
+          </View>
+        </BottomSheetModal>
+        {state === true && (
+          <View
+            style={{
+              position: 'absolute',
+              height: '100%',
+              width: '100%',
+              backgroundColor: 'rgba(0,0,0,0.3)',
+            }}></View>
+        )}
+      </ImageBackground>
     </View>
   );
 };
@@ -97,8 +140,7 @@ const Profil = () => {
 const profilStyles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: 'flex-start',
   },
   loginButton: {
     backgroundColor: '#081F5C',
