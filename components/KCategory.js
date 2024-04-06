@@ -22,16 +22,19 @@ const KCategory = ({ category, image }) => {
           height: 120,
           justifyContent: 'center',
         }}
-        onPress={() =>
-          doctorDataList.map(elem => {
-            if (elem.speciality === category) {
-              navigator.navigate('Categories', {
-                name: elem.name,
-                clinicName: elem.clinicName,
-              });
-            }
-          })
-        }>
+        onPress={() => {
+          try {
+            doctorDataList.map(elem => {
+              if (elem.speciality === category) {
+                navigator.navigate('Categories', {
+                  name: category,
+                });
+              }
+            });
+          } catch (error) {
+            console.error('An error occurred:', error);
+          }
+        }}>
         <Text
           style={{
             color: 'white',
