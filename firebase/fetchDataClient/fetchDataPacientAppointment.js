@@ -51,8 +51,8 @@ export function fetchDataGetAppointment() {
   });
 }
 
-export function fetchDataDeleteAppointment({ appointmentID }) {
-  const userRef = ref(database, `pacientAppointment/` + { appointmentID });
+export function fetchDataDeleteAppointment({ id }) {
+  const userRef = ref(database, `pacientAppointment/${id}`);
   remove(userRef)
     .then(() => {
       Alert.alert('Data removed successfully');

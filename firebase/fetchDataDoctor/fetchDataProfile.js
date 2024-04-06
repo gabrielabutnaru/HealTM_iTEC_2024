@@ -31,8 +31,8 @@ export function fetchDataGetProfile() {
   });
 }
 
-export function fetchDataDeleteProfile({ userUID }) {
-  const userRef = ref(database, `doctorUser/` + userUID);
+export function fetchDataDeleteProfile({ id }) {
+  const userRef = ref(database, `doctorUser/${id}`);
   remove(userRef)
     .then(() => {
       Alert.alert('Data removed successfully');
