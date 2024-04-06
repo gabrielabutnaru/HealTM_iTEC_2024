@@ -3,7 +3,7 @@ import KSpacer from './KSpacer';
 import KButton from './KButton';
 import { useNavigation } from '@react-navigation/native';
 
-const KDoctorCard = ({ name, clinica }) => {
+const KDoctorCard = ({ name, clinicName }) => {
   const { navigate } = useNavigation();
 
   return (
@@ -29,12 +29,12 @@ const KDoctorCard = ({ name, clinica }) => {
         <Text style={{ fontFamily: 'Lexend-SemiBold', fontSize: 18 }}>
           Clinica:
         </Text>
-        <Text style={{ fontSize: 18 }}>{clinica}</Text>
+        <Text style={{ fontSize: 18 }}>{clinicName}</Text>
       </View>
       <KSpacer h={40} />
       <KButton
         onPress={() => {
-          navigate('Programare', { name, clinica });
+          navigate('Programare', { name, clinicName });
         }}
       />
     </View>

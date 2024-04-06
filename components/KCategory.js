@@ -5,6 +5,7 @@ import {
   useWindowDimensions,
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import { doctorDataList } from '../firebase/doctorData';
 
 const KCategory = ({ category, image }) => {
   const navigator = useNavigation();
@@ -21,7 +22,16 @@ const KCategory = ({ category, image }) => {
           height: 120,
           justifyContent: 'center',
         }}
-        onPress={() => navigator.navigate('Categories')}>
+        onPress={() =>
+          doctorDataList.map(elem => {
+            if (elem.speciality === category) {
+              navigator.navigate('Categories', {
+                name: elem.name,
+                clinicName: elem.clinicName,
+              });
+            }
+          })
+        }>
         <Text
           style={{
             color: 'white',

@@ -14,13 +14,13 @@ import { View } from 'react-native';
 import { useEffect, useState } from 'react';
 import { onAuthStateChanged } from '@firebase/auth';
 import { auth } from './firebase/config';
-import TestScreen from './screens/TextScreen';
-
 import Programare from './screens/app/Programare';
 import { TimeProvider } from './contexts/TimeProvider';
 import { DateProvider } from './contexts/DateProvider';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
+import Landing from './screens/auth/Landing';
+import LoginD from './screens/authDoctor/LoginD';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -40,21 +40,6 @@ const TabNav = () => {
           backgroundColor: '#45D33D',
         },
       }}>
-      <Tab.Screen
-        name={'TestScreen'}
-        component={TestScreen}
-        options={{
-          tabBarIcon: ({ focused }) => (
-            <Ionicons
-              name={'reader-outline'}
-              size={focused ? 34 : 28}
-              color={focused ? '#F64048' : 'gray'}
-            />
-          ),
-          tabBarInactiveTintColor: 'gray',
-          tabBarActiveTintColor: '#F64048',
-        }}
-      />
       <Tab.Screen
         name={'Specialități'}
         component={Home}
@@ -113,6 +98,13 @@ const AuthStack = () => {
       screenOptions={{
         headerShown: false,
       }}>
+      <Stack.Screen
+        name={'Landing'}
+        component={Landing}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen name={'LoginD'} component={LoginD} />
+      {/*  <Stack.Screen name={'RegisterD'} component={RegisterD} />*/}
       <Stack.Screen name={'Login'} component={Login} />
       <Stack.Screen name={'Register'} component={Register} />
     </Stack.Navigator>
