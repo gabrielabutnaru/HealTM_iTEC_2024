@@ -1,16 +1,14 @@
 import { TouchableOpacity, Text } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
 
-const KButton = () => {
-  const navigator = useNavigation();
+const KButton = ({ onPress, width = 170, padding = 10 }) => {
   return (
     <TouchableOpacity
-      onPress={() => navigator.navigate('Programare')}
+      onPress={() => onPress()}
       style={{
         borderRadius: 8,
         backgroundColor: '#F64048',
-        padding: 10,
-        width: 170,
+        padding: padding,
+        width: width,
         alignItems: 'center',
       }}>
       <Text

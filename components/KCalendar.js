@@ -1,8 +1,9 @@
 import { Calendar } from 'react-native-calendars';
-import { useState } from 'react';
+import { useContext } from 'react';
+import { DateProvider } from '../contexts/DateProvider';
 
 export const KCalendar = () => {
-  const [selected, setSelected] = useState('');
+  const { date, setDate } = useContext(DateProvider);
   return (
     <Calendar
       style={{
@@ -31,16 +32,15 @@ export const KCalendar = () => {
       }}
       enableSwipeMonths={true}
       onDayPress={day => {
-        selected === '' ? setSelected(day.dateString) : setSelected('');
+        date === '' ? setDate(day.dateString) : setDate('');
       }}
       markedDates={{
-        [selected]: {
+        [date]: {
           selected: true,
           marked: true,
         },
       }}
       disabledDaysIndexes={[0, 6]}
-      disableAllTouchEventsForDisabledDays={true}
     />
   );
 };

@@ -7,7 +7,7 @@ const Categories = () => {
     <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
       <View style={{ flex: 1, paddingHorizontal: 20 }}>
         <KSpacer h={40} />
-        <KDoctorCard />
+        <KDoctorCard name={'Alintza'} clinica={'Sante'} />
       </View>
     </ScrollView>
   );

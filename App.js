@@ -14,10 +14,13 @@ import { View } from 'react-native';
 import { useEffect, useState } from 'react';
 import { onAuthStateChanged } from '@firebase/auth';
 import { auth } from './firebase/config';
-import Appointment from './screens/app/Appointment';
 import Programare from './screens/app/Programare';
+import { TimeProvider } from './contexts/TimeProvider';
+import { DateProvider } from './contexts/DateProvider';
+
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
+
 const TabNav = () => {
   return (
     <Tab.Navigator
@@ -33,8 +36,6 @@ const TabNav = () => {
           backgroundColor: '#45D33D',
         },
       }}>
-      <Tab.Screen name={'Programare'} component={Appointment} />
-
       <Tab.Screen
         name={'Specialități'}
         component={Home}
@@ -100,6 +101,8 @@ SplashScreen.preventAutoHideAsync();
 
 export default function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [time, setTime] = useState('9:00');
+  const [date, setDate] = useState('');
 
   useEffect(() => {
     onAuthStateChanged(auth, user => {
@@ -129,9 +132,13 @@ export default function App() {
 
   return (
     <View style={{ flex: 1 }} onLayout={onLayoutRootView}>
-      <NavigationContainer>
-        {isLoggedIn ? StackNav() : AuthStack()}
-      </NavigationContainer>
+      <TimeProvider.Provider value={{ time, setTime }}>
+        <DateProvider.Provider value={{ date, setDate }}>
+          <NavigationContainer>
+            {isLoggedIn ? StackNav() : AuthStack()}
+          </NavigationContainer>
+        </DateProvider.Provider>
+      </TimeProvider.Provider>
     </View>
   );
 }
