@@ -1,32 +1,8 @@
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  StyleSheet,
-  TextInput,
-  Button,
-} from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { auth } from '../../firebase/config';
 import { signOut } from '@firebase/auth';
-import { useEffect, useState } from 'react';
-import {
-  fetchDataAddProfile,
-  fetchDataGetProfile,
-} from '../../firebase/fetchDataDoctor/fetchDataProfile';
 
 const Profil = () => {
-  const [name, setName] = useState('');
-  const [clinicName, setClinicName] = useState('');
-  const [speciality, setSpeciality] = useState('');
-  const [description, setDescription] = useState('');
-  const [profileCart, setProfileCart] = useState([]);
-
-  useEffect(() => {
-    fetchDataGetProfile().then(response => {
-      setProfileCart(response);
-    });
-  }, []);
-
   return (
     <View style={profilStyles.container}>
       <Text>Profil</Text>
@@ -37,39 +13,6 @@ const Profil = () => {
         }}>
         <Text style={profilStyles.loginText}>LogOut</Text>
       </TouchableOpacity>
-      <TextInput
-        onChangeText={setName}
-        value={name}
-        placeholder="Enter your name..."
-      />
-      <TextInput
-        onChangeText={setClinicName}
-        value={clinicName}
-        placeholder="Enter clinic name..."
-      />
-      <Button
-        title={'post data'}
-        onPress={() =>
-          fetchDataAddProfile(
-            name,
-            clinicName,
-            speciality,
-            description,
-            setName,
-            setClinicName,
-            setSpeciality,
-            setDescription
-          )
-        }
-      />
-      <Button
-        title={'see data'}
-        onPress={() =>
-          profileCart.forEach(el => {
-            console.log(el);
-          })
-        }
-      />
     </View>
   );
 };
