@@ -1,12 +1,20 @@
 import { TouchableOpacity, Text } from 'react-native';
 
-const KButton = ({ onPress, width = 170, padding = 10 }) => {
+const KButton = ({
+  onPress,
+  width = 180,
+  padding = 10,
+  label = 'Programează-te',
+  outline = false,
+}) => {
   return (
     <TouchableOpacity
       onPress={() => onPress()}
       style={{
         borderRadius: 8,
-        backgroundColor: '#F64048',
+        backgroundColor: outline ? 'transparent' : '#F64048',
+        borderColor: '#F64048',
+        borderWidth: 2,
         padding: padding,
         width: width,
         alignItems: 'center',
@@ -15,9 +23,9 @@ const KButton = ({ onPress, width = 170, padding = 10 }) => {
         style={{
           fontFamily: 'Lexend-SemiBold',
           fontSize: 16,
-          color: 'white',
+          color: outline ? '#F64048' : '#FFFFFF',
         }}>
-        Programează-te
+        {label}
       </Text>
     </TouchableOpacity>
   );

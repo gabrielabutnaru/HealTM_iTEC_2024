@@ -17,6 +17,10 @@ import { auth } from './firebase/config';
 import Programare from './screens/app/Programare';
 import { TimeProvider } from './contexts/TimeProvider';
 import { DateProvider } from './contexts/DateProvider';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
+import Landing from './screens/auth/Landing';
+import LoginD from './screens/authDoctor/LoginD';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -94,6 +98,13 @@ const AuthStack = () => {
       screenOptions={{
         headerShown: false,
       }}>
+      <Stack.Screen
+        name={'Landing'}
+        component={Landing}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen name={'LoginD'} component={LoginD} />
+      {/*  <Stack.Screen name={'RegisterD'} component={RegisterD} />*/}
       <Stack.Screen name={'Login'} component={Login} />
       <Stack.Screen name={'Register'} component={Register} />
     </Stack.Navigator>
@@ -134,14 +145,18 @@ export default function App() {
   }
 
   return (
-    <View style={{ flex: 1 }} onLayout={onLayoutRootView}>
-      <TimeProvider.Provider value={{ time, setTime }}>
-        <DateProvider.Provider value={{ date, setDate }}>
-          <NavigationContainer>
-            {isLoggedIn ? StackNav() : AuthStack()}
-          </NavigationContainer>
-        </DateProvider.Provider>
-      </TimeProvider.Provider>
-    </View>
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <BottomSheetModalProvider>
+        <View style={{ flex: 1 }} onLayout={onLayoutRootView}>
+          <TimeProvider.Provider value={{ time, setTime }}>
+            <DateProvider.Provider value={{ date, setDate }}>
+              <NavigationContainer>
+                {isLoggedIn ? StackNav() : AuthStack()}
+              </NavigationContainer>
+            </DateProvider.Provider>
+          </TimeProvider.Provider>
+        </View>
+      </BottomSheetModalProvider>
+    </GestureHandlerRootView>
   );
 }
