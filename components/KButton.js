@@ -1,6 +1,11 @@
 import { TouchableOpacity, Text } from 'react-native';
 
-const KButton = ({ onPress, width = 170, padding = 10 }) => {
+const KButton = ({
+  onPress,
+  width = 170,
+  padding = 10,
+  text = ' Programează-te',
+}) => {
   return (
     <TouchableOpacity
       onPress={() => onPress()}
@@ -17,7 +22,7 @@ const KButton = ({ onPress, width = 170, padding = 10 }) => {
           fontSize: 16,
           color: 'white',
         }}>
-        Programează-te
+        {text}
       </Text>
     </TouchableOpacity>
   );

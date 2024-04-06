@@ -17,6 +17,8 @@ import { auth } from './firebase/config';
 import Programare from './screens/app/Programare';
 import { TimeProvider } from './contexts/TimeProvider';
 import { DateProvider } from './contexts/DateProvider';
+import Landing from './screens/auth/Landing';
+import LoginD from './screens/authDoctor/LoginD';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -94,6 +96,13 @@ const AuthStack = () => {
       screenOptions={{
         headerShown: false,
       }}>
+      <Stack.Screen
+        name={'Landing'}
+        component={Landing}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen name={'LoginD'} component={LoginD} />
+      {/*  <Stack.Screen name={'RegisterD'} component={RegisterD} />*/}
       <Stack.Screen name={'Login'} component={Login} />
       <Stack.Screen name={'Register'} component={Register} />
     </Stack.Navigator>
