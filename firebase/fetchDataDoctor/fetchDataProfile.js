@@ -1,41 +1,24 @@
-import { auth, database } from '../config';
-import { ref, update, get } from 'firebase/database';
+import { database } from '../config';
+import { ref, set, get, remove } from 'firebase/database';
 import { Alert } from 'react-native';
 
-export function fetchDataAddProfile(
-  name,
-  clinicName,
-  speciality,
-  description,
-  setName,
-  setClinicName,
-  setSpeciality,
-  setDescription
-) {
-  const userId = auth.currentUser.uid;
-  const userRef = ref(database, 'users/' + userId);
-  update(userRef, {
+export function fetchDataAddProfile(id, name, clinicName, speciality) {
+  const userRef = ref(database, 'doctorUser/' + id);
+  set(userRef, {
     name: name,
     clinicName: clinicName,
     speciality: speciality,
-    description: description,
   })
     .then(() => {
       Alert.alert('Data added successfully');
-      setName('');
-      setClinicName('');
     })
     .catch(error => {
       Alert.alert('Error', error.message);
-      setName('');
-      setClinicName('');
-      setSpeciality('');
-      setDescription('');
     });
 }
 
 export function fetchDataGetProfile() {
-  const usersRef = ref(database, `users/`);
+  const usersRef = ref(database, `doctorUser/`);
   return get(usersRef).then(card => {
     return Object.values(card.val()).map((elem, index) => {
       return {
@@ -43,8 +26,18 @@ export function fetchDataGetProfile() {
         name: elem.name,
         clinicName: elem.clinicName,
         speciality: elem.speciality,
-        description: elem.description,
       };
     });
   });
+}
+
+export function fetchDataDeleteProfile({ userUID }) {
+  const userRef = ref(database, `doctorUser/` + userUID);
+  remove(userRef)
+    .then(() => {
+      Alert.alert('Data removed successfully');
+    })
+    .catch(error => {
+      Alert.alert('Error', error.message);
+    });
 }
