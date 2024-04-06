@@ -1,8 +1,10 @@
 import { View, Text } from 'react-native';
 import KSpacer from './KSpacer';
 import KButton from './KButton';
+import { useNavigation } from '@react-navigation/native';
 
 const KDoctorCard = () => {
+  const navigator = useNavigation();
   return (
     <View
       style={{
@@ -29,7 +31,7 @@ const KDoctorCard = () => {
         <Text style={{ fontSize: 18 }}>Medicis Arzthaus</Text>
       </View>
       <KSpacer h={40} />
-      <KButton />
+      <KButton onPress={() => navigator.navigate('Programare')} />
     </View>
   );
 };

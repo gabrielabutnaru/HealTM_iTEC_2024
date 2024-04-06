@@ -9,6 +9,7 @@ import {
 import KSpacer from '../../components/KSpacer';
 import KHourLabel from '../../components/KHourLabel';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import KButton from '../../components/KButton';
 
 function Programare({ navigation }) {
   const { width } = useWindowDimensions();
@@ -55,6 +56,7 @@ function Programare({ navigation }) {
         </View>
         <KSpacer h={20} />
         <KHourLabel />
+        <KButton />
       </ImageBackground>
     </View>
   );
