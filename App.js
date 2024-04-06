@@ -15,9 +15,12 @@ import { useEffect, useState } from 'react';
 import { onAuthStateChanged } from '@firebase/auth';
 import { auth } from './firebase/config';
 import Programare from './screens/app/Programare';
+import { TimeProvider } from './contexts/TimeProvider';
+import { DateProvider } from './contexts/DateProvider';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
+
 const TabNav = () => {
   return (
     <Tab.Navigator
@@ -101,6 +104,8 @@ SplashScreen.preventAutoHideAsync();
 
 export default function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [time, setTime] = useState('9:00');
+  const [date, setDate] = useState('');
 
   useEffect(() => {
     onAuthStateChanged(auth, user => {
@@ -130,9 +135,13 @@ export default function App() {
 
   return (
     <View style={{ flex: 1 }} onLayout={onLayoutRootView}>
-      <NavigationContainer>
-        {isLoggedIn ? StackNav() : AuthStack()}
-      </NavigationContainer>
+      <TimeProvider.Provider value={{ time, setTime }}>
+        <DateProvider.Provider value={{ date, setDate }}>
+          <NavigationContainer>
+            {isLoggedIn ? StackNav() : AuthStack()}
+          </NavigationContainer>
+        </DateProvider.Provider>
+      </TimeProvider.Provider>
     </View>
   );
 }

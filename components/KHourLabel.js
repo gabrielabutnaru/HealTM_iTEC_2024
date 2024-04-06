@@ -1,7 +1,8 @@
-import { useState } from 'react';
+import { useContext } from 'react';
 import { StyleSheet } from 'react-native';
 import { Dropdown } from 'react-native-element-dropdown';
 import { Ionicons } from '@expo/vector-icons';
+import { TimeProvider } from '../contexts/TimeProvider';
 
 const data = [
   { label: '9:00', value: '9:00' },
@@ -15,7 +16,7 @@ const data = [
 ];
 
 const DropdownComponent = () => {
-  const [value, setValue] = useState(null);
+  const { time, setTime } = useContext(TimeProvider);
 
   return (
     <Dropdown
@@ -31,15 +32,23 @@ const DropdownComponent = () => {
       valueField="value"
       placeholder="Program:"
       searchPlaceholder="Search..."
-      value={value}
+      value={time}
       onChange={item => {
-        setValue(item.value);
+        setTime(item.value);
       }}
       renderLeftIcon={() => (
         <Ionicons
           style={styles.icon}
-          color="black"
+          color="#F64048"
           name="time-outline"
+          size={20}
+        />
+      )}
+      renderRightIcon={() => (
+        <Ionicons
+          style={styles.icon}
+          color="#F64048"
+          name="chevron-down-outline"
           size={20}
         />
       )}
@@ -51,20 +60,24 @@ export default DropdownComponent;
 
 const styles = StyleSheet.create({
   dropdown: {
-    margin: 16,
     height: 60,
     width: 140,
-    borderBottomColor: 'gray',
-    borderBottomWidth: 0.5,
+    borderColor: '#F64048',
+    borderRadius: 16,
+    backgroundColor: '#FFFFFF',
+    borderWidth: 2,
   },
   icon: {
-    marginRight: 5,
+    paddingHorizontal: 8,
+    color: '#F64048',
   },
   placeholderStyle: {
     fontSize: 16,
   },
   selectedTextStyle: {
     fontSize: 16,
+    fontFamily: 'Lexend-Medium',
+    color: '#2A2A2A',
   },
   iconStyle: {
     width: 20,

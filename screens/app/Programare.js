@@ -1,25 +1,26 @@
-import {
-  View,
-  Text,
-  ImageBackground,
-  TouchableOpacity,
-  Image,
-  useWindowDimensions,
-} from 'react-native';
+import { View, Text, ImageBackground, TouchableOpacity } from 'react-native';
 import KSpacer from '../../components/KSpacer';
 import KHourLabel from '../../components/KHourLabel';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { KCalendar } from '../../components/KCalendar';
+import { useRoute } from '@react-navigation/native';
 import KButton from '../../components/KButton';
-
+import { useContext } from 'react';
+import { TimeProvider } from '../../contexts/TimeProvider';
+import { DateProvider } from '../../contexts/DateProvider';
+import { Ionicons } from '@expo/vector-icons';
 function Programare({ navigation }) {
-  const { width } = useWindowDimensions();
-  const { top } = useSafeAreaInsets();
+  const { date } = useContext(DateProvider);
+  const { time } = useContext(TimeProvider);
+
+  const { params } = useRoute();
+
   return (
     <View
       style={{
         flex: 1,
         backgroundColor: '#FFF0F0',
-        padding: 12,
+        paddingVertical: 56,
+        paddingHorizontal: 24,
         alignItems: 'center',
       }}>
       <ImageBackground
@@ -28,19 +29,16 @@ function Programare({ navigation }) {
         style={{ flex: 1, width: '100%' }}>
         <View
           style={{
-            width: width,
-            paddingTop: top + 10,
-            paddingLeft: 10,
+            width: '100%',
             flexDirection: 'row',
             alignItems: 'center',
             justifyContent: 'space-between',
           }}>
           <TouchableOpacity onPress={() => navigation.goBack()}>
-            <Image
-              source={{
-                uri: 'https://static-00.iconduck.com/assets.00/arrow-left-icon-2048x1433-le08mlmd.png',
-              }}
-              style={{ height: 20, width: 30 }}
+            <Ionicons
+              name={'arrow-back-outline'}
+              color="#2A2A2A"
+              style={{ fontSize: 32 }}
             />
           </TouchableOpacity>
           <Text
@@ -48,15 +46,40 @@ function Programare({ navigation }) {
               fontFamily: 'Lexend-Bold',
               fontSize: 36,
               color: '#F64048',
-              textAlign: 'right',
-              paddingHorizontal: 30,
             }}>
             Programare
           </Text>
         </View>
-        <KSpacer h={20} />
+        <KSpacer h={24} />
+        <Text
+          style={{
+            fontFamily: 'Lexend-SemiBold',
+            color: '#F64048',
+            fontSize: 20,
+          }}>
+          {params.name}
+        </Text>
+        <KSpacer h={8} />
+        <View style={{ flexDirection: 'row', gap: 4 }}>
+          <Text style={{ fontFamily: 'Lexend-SemiBold', fontSize: 18 }}>
+            Clinica:
+          </Text>
+          <Text style={{ fontSize: 18 }}>{params.clinica}</Text>
+        </View>
+        <KSpacer h={24} />
+        <KCalendar />
+        <KSpacer h={24} />
         <KHourLabel />
-        <KButton />
+        <KSpacer h={36} />
+        <View style={{ alignItems: 'center', width: '100%' }}>
+          <KButton
+            width={342}
+            padding={12}
+            onPress={() => {
+              console.log('Ne-am programat', time, date);
+            }}
+          />
+        </View>
       </ImageBackground>
     </View>
   );

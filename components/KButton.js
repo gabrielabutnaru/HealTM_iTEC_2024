@@ -1,14 +1,14 @@
 import { TouchableOpacity, Text } from 'react-native';
 
-const KButton = ({ onPress }) => {
+const KButton = ({ onPress, width = 170, padding = 10 }) => {
   return (
     <TouchableOpacity
       onPress={() => onPress()}
       style={{
         borderRadius: 8,
         backgroundColor: '#F64048',
-        padding: 10,
-        width: 170,
+        padding: padding,
+        width: width,
         alignItems: 'center',
       }}>
       <Text

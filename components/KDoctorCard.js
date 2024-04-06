@@ -4,7 +4,8 @@ import KButton from './KButton';
 import { useNavigation } from '@react-navigation/native';
 
 const KDoctorCard = ({ name, clinicName }) => {
-  const navigator = useNavigation();
+  const { navigate } = useNavigation();
+
   return (
     <View
       style={{
@@ -31,7 +32,11 @@ const KDoctorCard = ({ name, clinicName }) => {
         <Text style={{ fontSize: 18 }}>{clinicName}</Text>
       </View>
       <KSpacer h={40} />
-      <KButton onPress={() => navigator.navigate('Programare')} />
+      <KButton
+        onPress={() => {
+          navigate('Programare', { name, clinicName });
+        }}
+      />
     </View>
   );
 };
