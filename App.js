@@ -69,7 +69,7 @@ const TabNav = () => {
         options={{
           tabBarIcon: ({ focused }) => (
             <Ionicons
-              name={'user'}
+              name={'person'}
               size={focused ? 32 : 26}
               color={focused ? '#A5DD9B' : 'gray'}
             />
