@@ -128,14 +128,28 @@ const Home = () => {
         </Text>
         <KSpacer h={40} />
         <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
-          <View style={{ flexDirection: 'row', gap: 22, flexWrap: 'wrap' }}>
-            {categTags.map(tag => (
-              <KCategory
-                key={categTags.indexOf(tag)}
-                category={tag.category}
-                image={tag.image}
-              />
-            ))}
+          <View style={{ flexDirection: 'row', flex: 1, gap: 8 }}>
+            <View style={{ gap: 10 }}>
+              {categTags.slice(0, categTags.length / 2).map(tag => (
+                <KCategory
+                  key={categTags.indexOf(tag)}
+                  category={tag.category}
+                  image={tag.image}
+                />
+              ))}
+            </View>
+
+            <View style={{ gap: 10 }}>
+              {categTags
+                .slice(categTags.length / 2, categTags.length)
+                .map(tag => (
+                  <KCategory
+                    key={categTags.indexOf(tag)}
+                    category={tag.category}
+                    image={tag.image}
+                  />
+                ))}
+            </View>
           </View>
         </ScrollView>
       </ImageBackground>
