@@ -14,7 +14,7 @@ import { View } from 'react-native';
 import { useEffect, useState } from 'react';
 import { onAuthStateChanged } from '@firebase/auth';
 import { auth } from './firebase/config';
-
+import Programare from './screens/app/Programare';
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
 const TabNav = () => {
@@ -75,6 +75,11 @@ const StackNav = () => {
         options={{ headerShown: false }}
       />
       <Stack.Screen name={'Categories'} component={Categories} />
+      <Stack.Screen
+        name={'Programare'}
+        component={Programare}
+        options={{ headerShown: false }}
+      />
     </Stack.Navigator>
   );
 };
