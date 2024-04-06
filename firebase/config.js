@@ -6,6 +6,8 @@ import { getDatabase } from 'firebase/database';
 const firebaseConfig = {
   apiKey: 'AIzaSyDWFhR2aHPiGc1wQs-Tygh3VzLLCY8PHvE',
   authDomain: 'itec2024-a2b68.firebaseapp.com',
+  databaseURL:
+    'https://itec2024-a2b68-default-rtdb.europe-west1.firebasedatabase.app',
   projectId: 'itec2024-a2b68',
   storageBucket: 'itec2024-a2b68.appspot.com',
   messagingSenderId: '175631717715',
