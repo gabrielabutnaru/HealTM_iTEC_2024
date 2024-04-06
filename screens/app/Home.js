@@ -4,17 +4,17 @@ import KCategory from '../../components/KCategory';
 
 const categTags = [
   {
-    category: 'Alergologie & Imunologie',
+    category: 'Alergologie si Imunologie',
     image:
       'https://images.unsplash.com/photo-1634128221567-3220e071d1ea?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
   },
   {
-    category: 'Anatomie patologică',
+    category: 'Anatomie patologica',
     image:
       'https://images.unsplash.com/photo-1539814858141-928517f6afd3?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8YW5hdG9teXxlbnwwfHwwfHx8MA%3D%3D',
   },
   {
-    category: 'Cardilogie',
+    category: 'Cardiologie',
     image:
       'https://images.unsplash.com/photo-1628348070889-cb656235b4eb?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
   },
@@ -24,7 +24,7 @@ const categTags = [
       'https://plus.unsplash.com/premium_photo-1664304334372-3ae5f0bc6665?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8Y2hpcnVyZ2llfGVufDB8fDB8fHww',
   },
   {
-    category: ' Dietetică',
+    category: ' Dietetica',
     image:
       'https://images.unsplash.com/photo-1685967836908-7d3b4921a670?q=80&w=2071&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
   },
@@ -34,7 +34,7 @@ const categTags = [
       'https://media.istockphoto.com/id/1211333698/photo/man-in-a-specialist-mask-and-hat-looks-into-a-microscope.webp?b=1&s=170667a&w=0&k=20&c=PIs95qy4NlmcgPJo77HMuT3zbL5MJ97i8x4qNHQVmBU=',
   },
   {
-    category: 'Genetică medicală',
+    category: 'Genetica medicala',
     image:
       'https://plus.unsplash.com/premium_photo-1676226342632-5072f3b96149?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NDF8fGdlbmV0aWNzfGVufDB8fDB8fHww',
   },

@@ -14,9 +14,8 @@ import { View } from 'react-native';
 import { useEffect, useState } from 'react';
 import { onAuthStateChanged } from '@firebase/auth';
 import { auth } from './firebase/config';
-import TestScreen from './screens/TextScreen';
-
 import Programare from './screens/app/Programare';
+
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
 const TabNav = () => {
@@ -34,21 +33,6 @@ const TabNav = () => {
           backgroundColor: '#45D33D',
         },
       }}>
-      <Tab.Screen
-        name={'TestScreen'}
-        component={TestScreen}
-        options={{
-          tabBarIcon: ({ focused }) => (
-            <Ionicons
-              name={'reader-outline'}
-              size={focused ? 34 : 28}
-              color={focused ? '#F64048' : 'gray'}
-            />
-          ),
-          tabBarInactiveTintColor: 'gray',
-          tabBarActiveTintColor: '#F64048',
-        }}
-      />
       <Tab.Screen
         name={'Specialități'}
         component={Home}
