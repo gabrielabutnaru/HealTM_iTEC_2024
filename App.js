@@ -15,7 +15,7 @@ import { useEffect, useState } from 'react';
 import { onAuthStateChanged } from '@firebase/auth';
 import { auth } from './firebase/config';
 import Appointment from './screens/app/Appointment';
-
+import Programare from './screens/app/Programare';
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
 const TabNav = () => {
@@ -51,34 +51,18 @@ const TabNav = () => {
         }}
       />
       <Tab.Screen
-        name={'Home'}
-        component={Home}
-        options={{
-          tabBarIcon: ({ focused }) => (
-            <Ionicons
-              name={'person'}
-              size={focused ? 34 : 28}
-              color={focused ? '#F64048' : 'gray'}
-            />
-          ),
-          tabBarInactiveTintColor: 'gray',
-          tabBarActiveTintColor: '#F64048',
-          headerShown: false,
-        }}
-      />
-      <Tab.Screen
         name={'Profil'}
         component={Profil}
         options={{
           tabBarIcon: ({ focused }) => (
             <Ionicons
-              name={'user'}
+              name={'person'}
               size={focused ? 32 : 26}
-              color={focused ? '#A5DD9B' : 'gray'}
+              color={focused ? '#F64048' : 'gray'}
             />
           ),
-          tabBarInactiveTintColor: '#F1F5A8',
-          tabBarActiveTintColor: '#F1F5A8',
+          tabBarInactiveTintColor: 'gray',
+          tabBarActiveTintColor: '#F64048',
         }}
       />
     </Tab.Navigator>
@@ -88,8 +72,17 @@ const TabNav = () => {
 const StackNav = () => {
   return (
     <Stack.Navigator>
-      <Stack.Screen name={'TabNav'} component={TabNav} />
+      <Stack.Screen
+        name={'TabNav'}
+        component={TabNav}
+        options={{ headerShown: false }}
+      />
       <Stack.Screen name={'Categories'} component={Categories} />
+      <Stack.Screen
+        name={'Programare'}
+        component={Programare}
+        options={{ headerShown: false }}
+      />
     </Stack.Navigator>
   );
 };

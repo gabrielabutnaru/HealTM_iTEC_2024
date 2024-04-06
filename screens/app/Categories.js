@@ -1,10 +1,15 @@
-import { View, Text } from 'react-native';
+import { View, ScrollView } from 'react-native';
+import KDoctorCard from '../../components/KDoctorCard';
+import KSpacer from '../../components/KSpacer';
 
 const Categories = () => {
   return (
-    <View style={{ flex: 1 }}>
-      <Text>Here will be doctors options</Text>
-    </View>
+    <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+      <View style={{ flex: 1, paddingHorizontal: 20 }}>
+        <KSpacer h={40} />
+        <KDoctorCard />
+      </View>
+    </ScrollView>
   );
 };
 
