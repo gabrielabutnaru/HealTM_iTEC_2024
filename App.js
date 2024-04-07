@@ -83,7 +83,11 @@ const StackNav = () => {
         component={TabNav}
         options={{ headerShown: false }}
       />
-      <Stack.Screen name={'Categories'} component={Categories} />
+      <Stack.Screen
+        name={'Categories'}
+        component={Categories}
+        options={{ headerShown: false }}
+      />
       <Stack.Screen
         name={'Programare'}
         component={Programare}

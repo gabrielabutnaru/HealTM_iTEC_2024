@@ -37,7 +37,7 @@ function Landing() {
           </Text>
           <KSpacer h={30} />
           <KButton
-            text={'Medic'}
+            label={'Medic'}
             width={260}
             onPress={() => {
               setIsMedic(true);
@@ -46,7 +46,7 @@ function Landing() {
           />
           <KSpacer h={10} />
           <KButton
-            text={'Pacient'}
+            label={'Pacient'}
             width={260}
             onPress={() => navigator.navigate('Login')}
           />
