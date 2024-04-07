@@ -1,26 +1,42 @@
-import { View, Text, StyleSheet, ImageBackground } from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  ImageBackground,
+  ScrollView,
+} from 'react-native';
 import { auth } from '../../firebase/config';
 import { signOut } from '@firebase/auth';
 import KAppointment from '../../components/KAppointment';
 import KSpacer from '../../components/KSpacer';
 import { BottomSheetModal } from '@gorhom/bottom-sheet';
-import { useCallback, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import KButton from '../../components/KButton';
+import {
+  fetchDataDeleteAppointment,
+  fetchDataGetAppointment,
+} from '../../firebase/fetchDataClient/fetchDataPacientAppointment';
 
 const Profil = () => {
   const [state, setState] = useState(false);
   const bottomSheetModalRef = useRef(null);
+  const [appointmentList, setAppointmentList] = useState([]);
 
   const snapPoints = useMemo(() => ['50%'], []);
 
-  const handlePresentModalPress = useCallback(() => {
-    bottomSheetModalRef.current?.present();
-    setState(true);
-  }, []);
+  // const handlePresentModalPress = useCallback(() => {
+  //   bottomSheetModalRef.current?.present();
+  //   setState(true);
+  // }, []);
 
   const closeModalPress = useCallback(() => {
     bottomSheetModalRef.current?.close();
     setState(false);
+  }, []);
+  useEffect(() => {
+    fetchDataGetAppointment().then(response => {
+      setAppointmentList(response);
+    });
   }, []);
 
   return (
@@ -65,14 +81,21 @@ const Profil = () => {
               Programări
             </Text>
             <KSpacer h={8} />
-            <KAppointment
-              specializare={'Cardiologie'}
-              clinica={'Medicis'}
-              ora={'10:00'}
-              zi={'11.04.2024'}
-              medic={'Ana Maria'}
-              onX={() => handlePresentModalPress()}
-            />
+            <ScrollView>
+              {appointmentList.map(elem => {
+                return (
+                  <KAppointment
+                    key={appointmentList.indexOf(elem)}
+                    // specializare={'Cardiologie'}
+                    clinica={elem.clinicName}
+                    ora={elem.time}
+                    zi={elem.date}
+                    medic={elem.doctorName}
+                    onX={() => fetchDataDeleteAppointment({ id: elem.uid })}
+                  />
+                );
+              })}
+            </ScrollView>
           </View>
           <View>
             <KButton

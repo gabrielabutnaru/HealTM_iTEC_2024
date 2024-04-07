@@ -1,25 +1,23 @@
 import { auth, database } from '../config';
-import { get, ref, update } from 'firebase/database';
+import { get, ref, set } from 'firebase/database';
 import { Alert } from 'react-native';
 
-export function fetchDataAddPacient(name, setName) {
+export function fetchDataAddPacient(name) {
   const userId = auth.currentUser.uid;
-  const userRef = ref(database, 'pacientUser/' + userId);
-  update(userRef, {
+  const userRef = ref(database, 'pacientUserData/' + userId);
+  set(userRef, {
     name: name,
   })
     .then(() => {
       Alert.alert('Data added successfully');
-      setName('');
     })
     .catch(error => {
       Alert.alert('Error', error.message);
-      setName('');
     });
 }
 
 export function fetchDataGetPacient() {
-  const usersRef = ref(database, `pacientUser/`);
+  const usersRef = ref(database, `pacientUserData/`);
   return get(usersRef).then(card => {
     return Object.values(card.val()).map((elem, index) => {
       return {
