@@ -186,6 +186,7 @@ const profilStyles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'flex-start',
+    backgroundColor: '#FFF0F0',
   },
   loginButton: {
     backgroundColor: '#081F5C',
