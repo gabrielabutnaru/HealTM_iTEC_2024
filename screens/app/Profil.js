@@ -5,37 +5,53 @@ import {
   ImageBackground,
   ScrollView,
 } from 'react-native';
-import { auth } from '../../firebase/config';
+import { auth, database } from '../../firebase/config';
 import { signOut } from '@firebase/auth';
 import KAppointment from '../../components/KAppointment';
 import KSpacer from '../../components/KSpacer';
 import { BottomSheetModal } from '@gorhom/bottom-sheet';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import KButton from '../../components/KButton';
-import {
-  fetchDataDeleteAppointment,
-  fetchDataGetAppointment,
-} from '../../firebase/fetchDataClient/fetchDataPacientAppointment';
+import { fetchDataDeleteAppointment } from '../../firebase/fetchDataClient/fetchDataPacientAppointment';
+import { onValue, ref } from 'firebase/database';
 
 const Profil = () => {
   const [state, setState] = useState(false);
   const bottomSheetModalRef = useRef(null);
   const [appointmentList, setAppointmentList] = useState([]);
+  const [IDappointment, setIDappointment] = useState('');
 
   const snapPoints = useMemo(() => ['50%'], []);
 
-  // const handlePresentModalPress = useCallback(() => {
-  //   bottomSheetModalRef.current?.present();
-  //   setState(true);
-  // }, []);
+  const handlePresentModalPress = useCallback(() => {
+    bottomSheetModalRef.current?.present();
+    setState(true);
+  }, []);
 
   const closeModalPress = useCallback(() => {
     bottomSheetModalRef.current?.close();
     setState(false);
   }, []);
+
   useEffect(() => {
-    fetchDataGetAppointment().then(response => {
-      setAppointmentList(response);
+    const usersRef = ref(database, `pacientAppointment/`);
+    return onValue(usersRef, card => {
+      setAppointmentList(
+        Object.values(card.val())
+          .filter(elem => {
+            console.log(elem);
+            return elem.userID === auth.currentUser.uid;
+          })
+          .map((elem, index) => {
+            return {
+              uid: Object.keys(card.val())[index],
+              doctorName: elem.doctorName,
+              clinicName: elem.clinicName,
+              date: elem.date,
+              time: elem.time,
+            };
+          })
+      );
     });
   }, []);
 
@@ -91,7 +107,10 @@ const Profil = () => {
                     ora={elem.time}
                     zi={elem.date}
                     medic={elem.doctorName}
-                    onX={() => fetchDataDeleteAppointment({ id: elem.uid })}
+                    onX={() => {
+                      setIDappointment(elem.id);
+                      handlePresentModalPress();
+                    }}
                   />
                 );
               })}
@@ -134,7 +153,10 @@ const Profil = () => {
               <KButton
                 width={100}
                 label={'Yes'}
-                onPress={() => alert('Insert delete here')}
+                onPress={() => {
+                  console.log(IDappointment);
+                  fetchDataDeleteAppointment({ id: IDappointment });
+                }}
               />
               <KSpacer w={20} />
               <KButton

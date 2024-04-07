@@ -8,10 +8,9 @@ import { useContext, useEffect, useState } from 'react';
 import { TimeProvider } from '../../contexts/TimeProvider';
 import { DateProvider } from '../../contexts/DateProvider';
 import { Ionicons } from '@expo/vector-icons';
-import {
-  fetchDataAddAppointment,
-  fetchDataGetAppointment,
-} from '../../firebase/fetchDataClient/fetchDataPacientAppointment';
+import { fetchDataAddAppointment } from '../../firebase/fetchDataClient/fetchDataPacientAppointment';
+import { auth, database } from '../../firebase/config';
+import { onValue, ref } from 'firebase/database';
 
 function Programare({ navigation }) {
   const { date } = useContext(DateProvider);
@@ -24,8 +23,26 @@ function Programare({ navigation }) {
   let variabila = 0;
 
   useEffect(() => {
-    fetchDataGetAppointment().then(response => {
-      setAppointmentList(response);
+    const usersRef = ref(database, `pacientAppointment/`);
+    return onValue(usersRef, card => {
+      if (card.exists()) {
+        setAppointmentList(
+          Object.values(card.val())
+            .filter(elem => {
+              console.log(elem);
+              return elem.userID === auth.currentUser.uid;
+            })
+            .map((elem, index) => {
+              return {
+                uid: Object.keys(card.val())[index],
+                doctorName: elem.doctorName,
+                clinicName: elem.clinicName,
+                date: elem.date,
+                time: elem.time,
+              };
+            })
+        );
+      }
     });
   }, []);
   return (
@@ -98,7 +115,13 @@ function Programare({ navigation }) {
                   ) {
                     variabila = 1;
                   } else if (date !== '') {
-                    fetchDataAddAppointment(name, clinicName, date, time);
+                    fetchDataAddAppointment(
+                      auth.currentUser.uid,
+                      name,
+                      clinicName,
+                      date,
+                      time
+                    );
                     variabila = 2;
                   } else if (date === '') {
                     variabila = 3;

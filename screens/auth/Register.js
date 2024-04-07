@@ -5,12 +5,14 @@ import {
   TouchableOpacity,
   Text,
   ImageBackground,
+  Alert,
 } from 'react-native';
 import { useCallback, useContext, useState } from 'react';
-import { signInWithEmailAndPassword } from '@firebase/auth';
-import { auth } from '../../firebase/config';
+import { createUserWithEmailAndPassword } from '@firebase/auth';
+import { auth, database } from '../../firebase/config';
 import { Ionicons } from '@expo/vector-icons';
 import { MyContext } from '../../contexts/myContext';
+import { ref, set } from 'firebase/database';
 
 function Login({ navigation }) {
   const backgroundImage = require('../../assets/images/ImgBk.png');
@@ -22,9 +24,23 @@ function Login({ navigation }) {
   const onPressSubmit = useCallback(({ email, password }) => {
     if (email.length > 0 && password.length > 0) {
       if (!isMedic) {
-        signInWithEmailAndPassword(auth, email, password).catch(err =>
-          alert(err)
-        );
+        createUserWithEmailAndPassword(auth, email, password)
+          .then(currentUser => {
+            const userId = currentUser.user.uid;
+            const userRef = ref(database, 'pacientUserData/' + userId);
+            set(userRef, {
+              name: name,
+              email: email,
+            })
+              .then(() => {
+                console.log('Data added successfully');
+              })
+              .catch(error => {
+                Alert.alert('Error', error.message);
+                console.log(userId);
+              });
+          })
+          .catch(err => alert(err));
       } else {
         navigation.navigate('CreateDocProfile');
       }
