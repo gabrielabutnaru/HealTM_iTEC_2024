@@ -31,7 +31,7 @@ const KDoctorCard = ({ name, clinicName }) => {
         </Text>
         <Text style={{ fontSize: 18 }}>{clinicName}</Text>
       </View>
-      <KSpacer h={40} />
+      <KSpacer h={36} />
       <KButton
         onPress={() => {
           navigate('Programare', { name, clinicName });
