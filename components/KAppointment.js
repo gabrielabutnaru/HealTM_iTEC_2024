@@ -1,7 +1,7 @@
 import { View, Text, TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
-const KAppointment = ({ specializare, medic, clinica, zi, ora, onX }) => {
+const KAppointment = ({ medic, clinica, zi, ora, onX }) => {
   return (
     <View
       style={{
@@ -20,14 +20,14 @@ const KAppointment = ({ specializare, medic, clinica, zi, ora, onX }) => {
             paddingVertical: 10,
             justifyContent: 'center',
           }}>
-          <Text
-            style={{
-              fontSize: 16,
-              fontFamily: 'Lexend-SemiBold',
-              color: '#F64048',
-            }}>
-            {specializare}
-          </Text>
+          {/*<Text*/}
+          {/*  style={{*/}
+          {/*    fontSize: 16,*/}
+          {/*    fontFamily: 'Lexend-SemiBold',*/}
+          {/*    color: '#F64048',*/}
+          {/*  }}>*/}
+          {/*  {specializare}*/}
+          {/*</Text>*/}
           <View style={{ flexDirection: 'row', gap: 4 }}>
             <Text style={{ fontSize: 14, fontFamily: 'Lexend-SemiBold' }}>
               Medic:
